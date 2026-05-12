@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Job 1: Prometheus monitoring itself
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Job 2: Your Spring Boot Application
+  - job_name: 'book-network'
+    # IMPORTANT: Match this to the path shown in your browser screenshot
+    metrics_path: '/api/v1/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8088']
